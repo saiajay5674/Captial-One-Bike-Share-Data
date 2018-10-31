@@ -22,109 +22,72 @@ function analyse(dataSet)
 
     //mostCommonStation(masterData);
 
-    findDistanceFromAPI(34.048401,-118.260948,34.04554,-118.256668);
+    initMap(34.048401,-118.260948,34.04554,-118.256668);
+
+    apiCallTest()
 
     
 }
 // Try using Google Maps Api
-function findDistanceFromAPI(sLat, sLong, eLat, eLong)
+function initMap(sLat, sLong, eLat, eLong)
 {
-    /*var origin = {lat: sLat, lng: sLong};
-    var destination = {lat: eLat, lng: eLong};
+    var origin = new google.maps.LatLng(sLat, sLong);
+    var destination = new google.maps.LatLng(eLat, eLong);
 
-    var service = new google.maps.DistanceMatrixService;
-
+    var service = new google.maps.DistanceMatrixService();
+    
     service.getDistanceMatrix({
-        
-        origins: origin,
-        destinations: destination,
-        travelMode: 'BYCYCLING',
-        unitSystem: google.maps.UnitSystem.METRIC,
-        avoidHighways: false,
-        avoidTolls: false
 
-    }, function (response, status){
+        origins: [origin],
+        destinations: [destination],
+        travelmode: 'BICYCLING',
 
-        if (status !== 'OK') {
-            alert('Error was: ' + status);
-        }
-        else{
-            var results = response.rows[0].elements;
+    }, callback);
 
-            console.log(results.distance.text);
-        }
-    })*/
+    function callback(response, status) 
+{
+    if (status == 'OK') 
+    {
+        for (var i = 0; i < origins.length; i++)
+        {
+            var results = response.rows[i].elements;
 
-    var bounds = new google.maps.LatLngBounds;
-        var markersArray = [];
+            for (var j = 0; j < results.length; j++)
+            {
+                var element = results[j];
+                var distance = element.distance.text;
 
-        var origin1 = {lat: sLat, lng: sLong};
-        var destinationB = {lat: eLat, lng: eLong};
-
-        var destinationIcon = 'https://chart.googleapis.com/chart?' +
-            'chst=d_map_pin_letter&chld=D|FF0000|000000';
-        var originIcon = 'https://chart.googleapis.com/chart?' +
-            'chst=d_map_pin_letter&chld=O|FFFF00|000000';
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 10
-        });
-        var geocoder = new google.maps.Geocoder;
-
-        var service = new google.maps.DistanceMatrixService;
-        service.getDistanceMatrix({
-          origins: origin1,
-          destinations: destinationB,
-          travelMode: 'BICYCLING',
-          unitSystem: google.maps.UnitSystem.METRIC,
-          avoidHighways: false,
-          avoidTolls: false
-        }, function(response, status) {
-          if (status !== 'OK') {
-            alert('Error was: ' + status);
-          } else {
-            var originList = response.originAddresses;
-            var destinationList = response.destinationAddresses;
-            var outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = '';
-            deleteMarkers(markersArray);
-
-            var showGeocodedAddressOnMap = function(asDestination) {
-              var icon = asDestination ? destinationIcon : originIcon;
-              return function(results, status) {
-                if (status === 'OK') {
-                  map.fitBounds(bounds.extend(results[0].geometry.location));
-                  markersArray.push(new google.maps.Marker({
-                    map: map,
-                    position: results[0].geometry.location,
-                    icon: icon
-                  }));
-                } else {
-                  alert('Geocode was not successful due to: ' + status);
-                }
-              };
-            };
-
-            for (var i = 0; i < originList.length; i++) {
-              var results = response.rows[i].elements;
-              geocoder.geocode({'address': originList[i]},
-                  showGeocodedAddressOnMap(false));
-              for (var j = 0; j < results.length; j++) {
-                geocoder.geocode({'address': destinationList[j]},
-                    showGeocodedAddressOnMap(true));
-                outputDiv.innerHTML += originList[i] + ' to ' + destinationList[j] +
-                    ': ' + results[j].distance.text + ' in ' +
-                    results[j].duration.text + '<br>';
-              }
+                console.log(distance);
             }
-          }
-        });
-}
-function deleteMarkers(markersArray) {
-    for (var i = 0; i < markersArray.length; i++) {
-      markersArray[i].setMap(null);
+        }
     }
-    markersArray = [];
-  }
+}
+
+}
+
+function apiCallTest()
+{
+    var apiCall = 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=34.048401,-118.260948&destinations=34.04554,-118.256668&mode=bicycling&units=metric&key=AIzaSyBdBiMTmNwdPCww3tKpi3ijxCJU_0_YW1o';
+
+    var request = new XMLHttpRequest();
+
+    // Open a new connection, using the GET request on the URL endpoint
+    request.open('GET', apiCall, true);
+
+    request.onload = function () {
+    
+        var data = JSON.parse(this.response);
+
+        console.log(data);
+
+    }
+
+    request.send();
+}
+
+
+
+
 
 function findAverageDistance(masterData)
 {
