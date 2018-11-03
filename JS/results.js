@@ -22,9 +22,9 @@ function analyse(dataSet)
 
     mostCommonStation(masterData);
 
-    initMap(34.048401,-118.260948,34.04554,-118.256668);
+    //initMap(34.048401,-118.260948,34.04554,-118.256668);
 
-    apiCallTest()
+    //apiCallTest()
 
     
 }
