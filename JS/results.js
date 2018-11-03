@@ -143,7 +143,7 @@ function mostCommonStation(masterData)
 
     console.log("Test");
 
-    displayMap(stationMap);
+    //displayMap(stationMap);
 }
 
 
