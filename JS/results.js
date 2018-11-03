@@ -18,7 +18,7 @@ function analyse(dataSet)
 
     //var avgDistance = findAverageDistance(masterData);
 
-    console.log(Object.keys(masterData).length);
+    //console.log(Object.keys(masterData).length);
 
     //mostCommonStation(masterData);
 
