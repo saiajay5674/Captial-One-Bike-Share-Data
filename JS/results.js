@@ -1,4 +1,4 @@
-var file = "http://localhost:8000/package/metro-bike-share-trip-data.csv";
+var file = "https://saiajay5674.github.io/Captial-One-Bike-Share-Data/package/metro-bike-share-trip-data.csv";
 var dataSet;
 
 Papa.parse(file, {
@@ -20,7 +20,7 @@ function analyse(dataSet)
 
     //console.log(avgDistance);
 
-    //mostCommonStation(masterData);
+    mostCommonStation(masterData);
 
     initMap(34.048401,-118.260948,34.04554,-118.256668);
 
