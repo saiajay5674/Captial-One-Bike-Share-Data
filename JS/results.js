@@ -126,7 +126,7 @@ function mostCommonStation(masterData)
 {
     var stationMap = new Map();
 
-    for (var i = 0; i < Object.keys(masterData).length; i++)
+    /*for (var i = 0; i < Object.keys(masterData).length; i++)
     {
         var currentData = masterData[i];
         
@@ -139,11 +139,11 @@ function mostCommonStation(masterData)
         }
 
         stationMap.set(stationID, 1);
-    }
+    }*/
 
-    console.log("Test");
+    console.log(Object.keys(masterData).length);
 
-    //displayMap(stationMap);
+    displayMap(stationMap);
 }
 
 
